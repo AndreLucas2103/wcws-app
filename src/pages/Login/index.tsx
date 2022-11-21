@@ -1,5 +1,5 @@
 import { useAppDispatch } from '@/utils/hooks/useRedux'
-import { socket } from '@/utils/services/socketio'
+import { socket } from '@/utils/providers/SocketIoProvider'
 import { toastError } from 'components/avisos/toast'
 import { authToken } from 'config/authToken'
 import { IUsuario } from 'interfaces/IUsuario'
@@ -43,7 +43,7 @@ export const Login = () => {
             dispatch(setUsuario({
                 administrador: usuario.administrador,
                 email: usuario.email,
-                id: usuario.id,
+                _id: usuario._id,
                 nomeCompleto: usuario.nomeCompleto,
                 primeiroNome: usuario.primeiroNome,
                 foto: usuario.foto,

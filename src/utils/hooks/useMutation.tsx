@@ -2,6 +2,7 @@ import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
+import { setLoading } from "redux/store/actions/Loading.action";
 import { toastError, toastSuccess } from "../../components/avisos/toast";
 import { authToken } from "../../config/authToken";
 import { api } from "../services/api";
@@ -17,7 +18,7 @@ export function useMutation<TDataSend = unknown, TDataResponse = unknown>(
     options?: {
         params?: object // parametros da consulta, req.query
         headers?: object // cabecalho da consulta, req.headers
-        body?: object // corpo da consulta, req.body
+        body?: Partial<TDataSend> // corpo da consulta, req.body
         method: 'post' | 'put' | 'patch' | 'delete' // metodo da consulta, req.method
         resNotInData?: boolean // TRUE se o resultado não estiver sendo repassado no campo DATA (res.data.data), geralmente passado somente o resultado (res.data)
         enable?: boolean, // caso esteja TRUE o useEffect será executado, caso contrario ele não será executado, usad para definir se uma consulta está pronta para ser executada

@@ -1,5 +1,5 @@
 import { useNetwork } from "@/utils/hooks/useNetwork"
-import { socket } from "@/utils/services/socketio"
+import { socket } from "@/utils/providers/SocketIoProvider"
 import { Menu, Transition } from "@headlessui/react"
 import { toastError } from "components/avisos/toast"
 import { ICallbackSocket } from "interfaces/ICallbackSocket"
@@ -17,7 +17,7 @@ export const NavMenu = () => {
     return (
         <nav className="h-full bg-blue-600 rounded-[20px] py-20px flex justify-center w-full">
 
-            <div className="flex flex-col h-full justify-between">
+            {/* <div className="flex flex-col h-full justify-between">
                 <div className="flex justify-center mb-10px">
                     <div>
                         <img src="https://img.icons8.com/ios/50/FFFFFF/react-native--v1.png" className="w-[30px]" />
@@ -76,7 +76,6 @@ export const NavMenu = () => {
                                                 </svg>
                                                 <span className="sr-only">Loading...</span>
                                             </div>
-
                                     }
 
                                 </div>
@@ -102,7 +101,7 @@ export const NavMenu = () => {
 
 
                 </div>
-            </div>
+            </div> */}
 
         </nav>
     )
@@ -137,7 +136,7 @@ const DropdownMenuAlterarStatus = () => {
 
     const alterarStatus = () => {
         socket.emit('usuario_atualizar_status', {
-            idUsuario: usuario?.id,
+            idUsuario: usuario?._id,
             statusChat: usuario?.statusChat === 1 ? 2 : 1
         }, (callback: ICallbackSocket) => {
             if (callback?.erro) {
