@@ -3,8 +3,9 @@ import socketIOClient from "socket.io-client";
 import { useSocketEmit } from "../hooks/useSocketEmit";
 
 export const socket = socketIOClient("http://localhost:3030", {
+    autoConnect: true,
     auth: {
-        token: ""
+        token: null
     },
 });
 
@@ -26,23 +27,17 @@ export const SocketIoProvider = ({ children }: { children: PropsWithChildren }) 
         return () => {
             socket.off('connect');
             socket.off('disconnect');
-            socket.off('teste');
+            socket.off('exception');
         };
     }, []);
 
-    const { emit } = useSocketEmit({
+    const { emit } = useSocketEmit('teste', {
 
     })
 
     return (
         <>
-            <div>
-                <p>Connected: {'' + isConnected}</p>
-                <button onClick={() => {
-                    emit('teste', { 'name': '123' })
-                }}>Send ping</button>
-            </div>
-            {/* {children} */}
+            {children}
         </>
     )
 }

@@ -22,7 +22,7 @@ export const Login = () => {
     const dispatch = useAppDispatch();
 
     const onSubmitLogin = (data: ILoginFormData) => {
-        socket.emit('auth_login', data, (callback: ICallbackSocket<{ token: string, usuario: IUsuario }>) => {
+        socket.emit('auth-login', data, (callback: ICallbackSocket<{ token: string, usuario: IUsuario }>) => {
 
             if (callback.erro) {
                 toastError(callback.erro.mensagem)
