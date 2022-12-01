@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from 'react';
 
 export function useNetwork() {
     const [state, setState] = useState(() => {
@@ -12,12 +13,7 @@ export function useNetwork() {
     function getNetworkConnection() {
         const { navigator }: any = window;
 
-        return (
-            navigator.connection ||
-            navigator.mozConnection ||
-            navigator.webkitConnection ||
-            null
-        );
+        return navigator.connection || navigator.mozConnection || navigator.webkitConnection || null;
     }
 
     function getNetworkConnectionInfo() {
@@ -36,7 +32,6 @@ export function useNetwork() {
     }
 
     useEffect(() => {
-
         const handleOnline = () => {
             setState((prevState): any => ({
                 ...prevState,
@@ -60,18 +55,17 @@ export function useNetwork() {
             }));
         };
 
-        window.addEventListener("online", handleOnline);
-        window.addEventListener("offline", handleOffline);
+        window.addEventListener('online', handleOnline);
+        window.addEventListener('offline', handleOffline);
         const connection = getNetworkConnection();
-        connection?.addEventListener("change", handleConnectionChange);
+        connection?.addEventListener('change', handleConnectionChange);
 
         return () => {
-            window.removeEventListener("online", handleOnline);
-            window.removeEventListener("offline", handleOffline);
-            connection?.removeEventListener("change", handleConnectionChange);
+            window.removeEventListener('online', handleOnline);
+            window.removeEventListener('offline', handleOffline);
+            connection?.removeEventListener('change', handleConnectionChange);
         };
     }, []);
 
-    return { ...state }
+    return { ...state };
 }
-

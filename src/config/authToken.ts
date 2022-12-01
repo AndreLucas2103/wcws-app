@@ -1,5 +1,5 @@
 export const authToken = { // configurações do cookie para salvar o token da api
-    nomeToken: "token-chat-app-react-ts",
+    nomeToken: "wcws-app",
     diasExpire: 24 * 60 * 60 * 7 // 7 dias 
 }
 

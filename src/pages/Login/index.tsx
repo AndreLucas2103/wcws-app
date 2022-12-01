@@ -1,58 +1,63 @@
-import { useAppDispatch } from '@/utils/hooks/useRedux'
-import { socket } from '@/utils/providers/SocketIoProvider'
-import { toastError } from 'components/avisos/toast'
-import { authToken } from 'config/authToken'
-import { IUsuario } from 'interfaces/IUsuario'
-import { useCookies } from 'react-cookie'
-import { useForm } from 'react-hook-form'
-import { setUsuario } from 'redux/store/actions/Usuario.action'
-import { io } from 'socket.io-client'
-import { ICallbackSocket } from '../../interfaces/ICallbackSocket'
+import { useMutation } from '@/utils/hooks/useMutation';
+import { useAppDispatch } from '@/utils/hooks/useRedux';
+import { socket } from '@/utils/providers/SocketIoProvider';
+import { authToken } from 'config/authToken';
+import { IUsuario } from 'interfaces/IUsuario';
+import { useCookies } from 'react-cookie';
+import { useForm } from 'react-hook-form';
+import { setUsuario } from 'redux/store/actions/Usuario.action';
 
 interface ILoginFormData {
-    email: string
-    senha: string
+    email: string;
+    senha: string;
 }
 
 export const Login = () => {
-    const [cookies, setCookie, removeCookie] = useCookies([authToken.nomeToken]);
+    const dispatch = useAppDispatch();
+
+    const [, setCookie] = useCookies([authToken.nomeToken]);
 
     const { register, handleSubmit, setValue } = useForm<ILoginFormData>();
 
-    const dispatch = useAppDispatch();
+    const { mutate } = useMutation<
+        { email: string; senha: string },
+        {
+            usuario: IUsuario;
+            token: string;
+        }
+    >('/usuario/auth/login', {
+        method: 'post',
+        messageSucess: 'Usuário logado',
+        onSuccess: (e) => {
+            const {
+                data: { usuario, token },
+            } = e;
 
-    const onSubmitLogin = (data: ILoginFormData) => {
-        socket.emit('auth-login', data, (callback: ICallbackSocket<{ token: string, usuario: IUsuario }>) => {
+            setCookie(authToken.nomeToken, token, {
+                path: '/',
+            });
 
-            if (callback.erro) {
-                toastError(callback.erro.mensagem)
+            // define o token em auth no socket, sempre será enviado ao servidor com ele
+            socket.auth = { token: token };
 
-                return
-            }
+            // iniciar conexão com o socket
+            socket.connect();
 
-            const { data: { usuario } } = callback
-
-            setCookie(authToken.nomeToken, callback.data.token, { path: '/' })
-
-            socket.auth = { token: callback.data.token }; // defino o token para sempre ser enviado como auth
-            socket.disconnect() // desconecto o socket e conecto novamente, pois vai ser necessário recomeçar a conexão para pegar o token
-            setTimeout(() => {
-                socket.connect();
-            }, 500)
-
-            dispatch(setUsuario({
-                administrador: usuario.administrador,
-                email: usuario.email,
-                _id: usuario._id,
-                nomeCompleto: usuario.nomeCompleto,
-                primeiroNome: usuario.primeiroNome,
-                foto: usuario.foto,
-                situacao: usuario.situacao,
-                socketId: usuario.socketId,
-                statusChat: usuario.statusChat,
-            }))
-        })
-    }
+            dispatch(
+                setUsuario({
+                    administrador: usuario.administrador,
+                    email: usuario.email,
+                    _id: usuario._id,
+                    nomeCompleto: usuario.nomeCompleto,
+                    primeiroNome: usuario.primeiroNome,
+                    foto: usuario.foto,
+                    situacao: usuario.situacao,
+                    socketId: usuario.socketId,
+                    statusChat: usuario.statusChat,
+                }),
+            );
+        },
+    });
 
     return (
         <div className="min-h-full h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-blue-200">
@@ -67,17 +72,16 @@ export const Login = () => {
                         Acessar plataforma
                     </h2>
                 </div>
-                <form
-                    className="mt-8 space-y-6"
-                    onSubmit={handleSubmit(onSubmitLogin)}
-                >
+                <form className="mt-8 space-y-6" onSubmit={handleSubmit(mutate)}>
                     <div className="rounded-md shadow-sm -space-y-px">
                         <div>
                             <label htmlFor="email-address" className="sr-only">
                                 Email address
                             </label>
                             <input
-                                {...register("email", { required: true })}
+                                {...register('email', {
+                                    required: true,
+                                })}
                                 type="email"
                                 autoComplete="email"
                                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
@@ -86,7 +90,9 @@ export const Login = () => {
                         </div>
                         <div>
                             <input
-                                {...register("senha", { required: true })}
+                                {...register('senha', {
+                                    required: true,
+                                })}
                                 id="password"
                                 type="password"
                                 autoComplete="current-password"
@@ -98,7 +104,7 @@ export const Login = () => {
 
                     <div className="flex items-center justify-between">
                         <div className="text-sm">
-                            <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
+                            <a href="/" className="font-medium text-blue-600 hover:text-blue-500">
                                 Esqueceu a senha?
                             </a>
                         </div>
@@ -113,21 +119,21 @@ export const Login = () => {
                         </button>
                     </div>
 
-                    <div className='mt-2'>
+                    <div className="mt-2">
                         <button
-                            type='button'
+                            type="button"
                             onClick={() => {
-                                setValue('email', 'usuario1@mail.com')
-                                setValue('senha', '123456')
+                                setValue('email', 'usuario1@mail.com');
+                                setValue('senha', '123456');
                             }}
                         >
                             usuario 1
                         </button>
                         <button
-                            type='button'
+                            type="button"
                             onClick={() => {
-                                setValue('email', 'usuario2@mail.com')
-                                setValue('senha', '123456')
+                                setValue('email', 'usuario2@mail.com');
+                                setValue('senha', '123456');
                             }}
                         >
                             usuario 2
@@ -136,5 +142,5 @@ export const Login = () => {
                 </form>
             </div>
         </div>
-    )
-}
+    );
+};

@@ -1,5 +1,5 @@
-import { Outlet } from "react-router-dom"
-import { NavMenu } from "./NavMenu"
+import { Outlet } from 'react-router-dom';
+import { NavMenu } from './NavMenu';
 
 export const LayoutSistema = () => {
     return (
@@ -11,5 +11,5 @@ export const LayoutSistema = () => {
                 <Outlet />
             </div>
         </div>
-    )
-}
+    );
+};

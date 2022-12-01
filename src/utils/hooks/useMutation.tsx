@@ -1,11 +1,11 @@
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
-import { useEffect, useState } from "react";
+import axios, { AxiosError, AxiosResponse } from "axios";
+import { useState } from "react";
 import { useCookies } from "react-cookie";
-import { useDispatch } from "react-redux";
 import { setLoading } from "redux/store/actions/Loading.action";
 import { toastError, toastSuccess } from "../../components/avisos/toast";
 import { authToken } from "../../config/authToken";
 import { api } from "../services/api";
+import { useAppDispatch } from "./useRedux";
 
 interface IErrorState { // tipagem de erro, padrão enviado pela API
     codigoPermissao?: string
@@ -15,7 +15,7 @@ interface IErrorState { // tipagem de erro, padrão enviado pela API
 
 export function useMutation<TDataSend = unknown, TDataResponse = unknown>(
     url: string, // string para consulta 
-    options?: {
+    options: {
         params?: object // parametros da consulta, req.query
         headers?: object // cabecalho da consulta, req.headers
         body?: Partial<TDataSend> // corpo da consulta, req.body
@@ -31,7 +31,7 @@ export function useMutation<TDataSend = unknown, TDataResponse = unknown>(
         notOpenModalWhithoutPermission?: boolean, // se TRUE o hook não irá enviar o codigo da permissao para o dispatch, sendo assim não vai abrir o modal
     },
 ) {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const mutateAPI = url[0] === '/' ? api : axios // decide se a api vai ser a padrão ou requisição para outras
 

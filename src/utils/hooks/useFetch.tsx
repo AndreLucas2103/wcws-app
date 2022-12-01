@@ -2,6 +2,7 @@ import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
+import { setLoading } from "redux/store/actions/Loading.action";
 import { toastError, toastSuccess } from "../../components/avisos/toast";
 import { authToken } from "../../config/authToken";
 import { api } from "../services/api";
