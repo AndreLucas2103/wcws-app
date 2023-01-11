@@ -1,9 +1,9 @@
 import { ModalSimples } from 'components/modal/ModalSimples';
 import { LoadingSpinnerPage } from 'components/spinner/SpinnerLoading';
-import { PropsWithChildren } from 'react';
+import { ReactNode } from 'react';
 import { useNetwork } from '../hooks/useNetwork';
 
-export const AvisoProvider = ({ children }: { children: PropsWithChildren }) => {
+export const AvisoProvider = ({ children }: { children: ReactNode }) => {
     return (
         <>
             <LoadingSpinnerPage /> {/* rodar o spinner da aplicação*/}
@@ -20,7 +20,10 @@ const AvisoSemConexao = () => {
 
     return (
         <ModalSimples
-            button={null}
+            button={{
+                className: 'hidden',
+                children: 'asds',
+            }}
             isOpen={true}
             setIsOpen={() => {}}
             titleClassname="hidden"
@@ -30,7 +33,10 @@ const AvisoSemConexao = () => {
                 <div className="flex flex-col">
                     <p className="text-20px font-semibold">SEM CONEXÃO</p>
                     <div className="flex justify-center mt-10px">
-                        <img src="https://img.icons8.com/color/96/null/no-network.png" alt="" className="w-[80px] " />
+                        <img
+                            alt=""
+                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAADM0lEQVRoge2aT0gUURzHP6+0RMhMNMtKJKhLnbIshBW6KCipG3rKOtTBUjShjNKgQ+AWaFkKZXoqoYOVrZnkJUEr+qNCkRcLCwSJ/qBFSZnu6zDNOrM7Krvivoz5XPbN7/fe8Pu+N7/fvJlZsLGZF8J4UNt8R+rt+x0dAGRlZnr9ZQV7Tf3/BZaoDmC+2AJUs+gFhAXSOXXvATl3r4XhyZ3rlgXk/10BY/nUaalzLWgwVuSXnJrVv+hXwBagGlMOGLcKm7ftkgBd926HOqaAWPQrYAtQjS1ANbYA1dgCVGMLUI0tQDUBPRMvFGJqkojeTiJePCB86BVLv4yAEEzFrOXMNw/dyzfwOJlw0cdv37HKBUT0dhLVfJawD+/8fGEjb0kH0n8NQSQD0kG56MFt7KPuEvJ4iLrpIqb6oGXwFmwCWqWDKmmIe8Z3nfoDTWzS5nnHasXhH/3sH38d7HCX6KECFK2AY2KYAt/go+NAWMynEJrPzEmZRjYoEBAmPRR/7zMvfXwiXH0KJxphiSEkIaCsHhp7IWGjcYRAclFuYdmcl9Bg/9OAX6nnlVZYvsG7dblKSAd5QIvXuGo1NDyDNUnacVsD1BzR2seuQHah1v7wHgp3wuhH4ynzQ1+FJE7T9I99gued04Hqv77t551aXzM5oRcg2G46llKb8alJcBZrNmPgAO1NcKFI62tmR1AC8ksrnRLZAPhl12zklVbIny+rifBMmB1SQm2J1tZF6LQ3QXUheDxWp1wXVBJLZD0BBu8dO2tGzVCFZsYTbBVKCHIco+Er/I16tXEW+fuyDkH5NXN10pGMhPyjnXTQDOzzGoQwVxvQKhH422qO+ObBDRV7obsYBUTHQUrGtNdYRmFaREqG1tdcRttCvwLJhBPJANreRiM+ES51Qf9Dc8IKAWV1kLoHju6GkSHjqQYZZ6uS777SQQ7QijFro+Pg62f/UikErIz1vQdIBLmimzYleyHRgxvJeZNx7JNVndds/jewc6KbNlC5nX5EJeACAvlwKAEXPZzWDcr/OiDTyEZSjTEnrHmD4Lg+8zrKBYA3sXOAXCTJCNb/dQ0DfYCbcdxWj5R/AGq36lMAWF+LAAAAAElFTkSuQmCC"
+                        />
                     </div>
                     <div>
                         <div role="status" className="flex justify-center mt-20px mb-10px">

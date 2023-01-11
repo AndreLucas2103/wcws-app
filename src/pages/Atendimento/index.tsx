@@ -4,7 +4,7 @@ import { MenusAtendimento } from './components/MenusAtendimento';
 export const Atendimento = () => {
     return (
         <div className="flex py-10px px-20px h-full">
-            <div className="w-2/12 min-w-[220px]">
+            <div className="w-2/12 h-full min-w-[220px]">
                 <MenusAtendimento />
             </div>
 

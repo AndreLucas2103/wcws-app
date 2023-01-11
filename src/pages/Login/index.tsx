@@ -15,7 +15,9 @@ interface ILoginFormData {
 export const Login = () => {
     const dispatch = useAppDispatch();
 
-    const [, setCookie] = useCookies([authToken.nomeToken]);
+    const [cookie, setCookie, removeCookie] = useCookies([authToken.nomeToken]);
+
+    if (cookie[authToken.nomeToken]) removeCookie(authToken.nomeToken);
 
     const { register, handleSubmit, setValue } = useForm<ILoginFormData>();
 

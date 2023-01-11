@@ -2,7 +2,7 @@ import { socket } from '@/utils/providers/SocketIoProvider';
 import { Menu, Transition } from '@headlessui/react';
 import { toastError } from 'components/avisos/toast';
 import { authToken } from 'config/authToken';
-import { ICallbackSocket } from 'interfaces/ICallbackSocket';
+import { ISocketResponse } from 'interfaces/ISocketResponse';
 import { Fragment } from 'react';
 import { useCookies } from 'react-cookie';
 import { Link } from 'react-router-dom';
@@ -112,9 +112,9 @@ const DropdownMenuAlterarStatus = () => {
             'usuario_atualizar_status',
             {
                 idUsuario: usuario?._id,
-                statusChat: usuario?.statusChat === 1 ? 2 : 1,
+                status: usuario?.statusChat === 1 ? 2 : 1,
             },
-            (callback: ICallbackSocket) => {
+            (callback: ISocketResponse) => {
                 if (callback?.erro) {
                     return toastError(callback.erro.mensagem);
                 }

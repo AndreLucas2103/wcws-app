@@ -1,8 +1,10 @@
 import { IChat } from 'interfaces/IChat';
+import { IMensagem } from 'interfaces/IMensagem';
 import {
     CHATS_ANDAMENTO_ADICIONAR,
     CHATS_ANDAMENTO_ATUALIZAR_CHAT,
     CHATS_ANDAMENTO_REMOVER,
+    CHATS_ANDAMENTO_ADICIONAR_NOVA_MENSAGEM,
 } from 'redux/types/chatsAndamentoTypes';
 
 export function chatsAndamentoAdicionar(chat: IChat) {
@@ -25,6 +27,16 @@ export function chatsAndamentoAtualizarChat(_id: string, data: Partial<IChat>) {
         payload: {
             _id,
             data,
+        },
+    };
+}
+
+export function chatsAndamentoAdicionarNovaMensagem(idChat: string, mensagem: IMensagem) {
+    return {
+        type: CHATS_ANDAMENTO_ADICIONAR_NOVA_MENSAGEM,
+        payload: {
+            idChat,
+            mensagem,
         },
     };
 }

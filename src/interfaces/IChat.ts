@@ -1,3 +1,4 @@
+import { IMensagem } from './IMensagem';
 import { IUsuario } from './IUsuario';
 
 export interface IChat {
@@ -7,7 +8,7 @@ export interface IChat {
     nome: string;
     email: string;
     socketId: string | null;
-    situacao: 1 | 2 | 3;
+    situacao: 1 | 2 | 3 | 4; // 1- aguardando, 2- andamento, 3-finalizado, 4-em tranferência
     dataInicio: Date;
     dataFim: Date | null;
     usuarioResponsavel: IUsuario[] | string[];
@@ -17,4 +18,5 @@ export interface IChat {
     novaMensagem?: number;
     segundosFila?: number;
     recusado?: boolean;
+    mensagens?: IMensagem[];
 }

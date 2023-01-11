@@ -5,24 +5,37 @@
 @tailwind utilities;
 
 @layer base {
-  html {
-    font-family: 'Poppins', sans-serif;
-  }
+    html {
+        font-family: 'Poppins', sans-serif;
+    }
 }
 
 body {
-  margin: 0;
+    margin: 0;
 }
 
 /* =================================== */
 /* ------------- Texto --------------- */
 /* =================================== */
 
-
 /* =================================== */
 /* ------------- scrollbar --------------- */
 /* =================================== */
 
 .scrollbar-navMenu::-webkit-scrollbar {
-  width: 0;
+    width: 0;
+}
+
+.scrollhost::-webkit-scrollbar {
+    width: 4px;
+    height: 0px;
+}
+.scrollhost::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+.scrollhost::-webkit-scrollbar-thumb {
+    background: #888;
+}
+.scrollhost::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }

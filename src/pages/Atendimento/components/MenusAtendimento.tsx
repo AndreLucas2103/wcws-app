@@ -6,13 +6,13 @@ export const MenusAtendimento = () => {
     const [abaAtual, setAbaAtual] = useState<'chats' | 'grupos'>('chats');
 
     return (
-        <div>
-            <div className="flex justify-center px-10px">
+        <div className="h-full flex flex-col">
+            <div className="flex justify-center p-10px ">
                 <Link
                     to="/atendimento/chats"
                     onClick={() => setAbaAtual('chats')}
                     className={`
-                    relative min-h-[36px]  flex items-center min-w-[36px] w-min justify-center rounded-[14px] mt-10px hover:bg-blue-500
+                    relative min-h-[36px]  flex items-center min-w-[36px] w-min justify-center rounded-[14px] hover:bg-blue-500
                     ${abaAtual === 'chats' ? 'bg-blue-500' : 'bg-gray-300'}
                 `}
                 >
@@ -28,7 +28,7 @@ export const MenusAtendimento = () => {
                     to="/atendimento/grupos"
                     onClick={() => setAbaAtual('grupos')}
                     className={`
-                    static min-h-[36px]  flex items-center min-w-[36px] w-min justify-center rounded-[14px] mt-10px hover:bg-blue-500  ml-10px
+                    static min-h-[36px]  flex items-center min-w-[36px] w-min justify-center rounded-[14px] hover:bg-blue-500  ml-10px
                     ${abaAtual === 'grupos' ? 'bg-blue-500' : 'bg-gray-300'}
                 `}
                 >
@@ -41,7 +41,7 @@ export const MenusAtendimento = () => {
 
                 <Link
                     to="/atendimento/emails"
-                    className="static min-h-[36px] bg-gray-300 flex items-center min-w-[36px] w-min justify-center rounded-[14px] mt-10px hover:bg-blue-500 ml-10px"
+                    className="static min-h-[36px] bg-gray-300 flex items-center min-w-[36px] w-min justify-center rounded-[14px] hover:bg-blue-500 ml-10px"
                 >
                     <img
                         src="https://img.icons8.com/sf-regular-filled/48/FFFFFF/new-post.png"

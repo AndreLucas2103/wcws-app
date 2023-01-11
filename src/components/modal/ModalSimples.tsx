@@ -1,4 +1,4 @@
-import React, { useState, Fragment, ReactNode, useImperativeHandle } from 'react';
+import React, { useState, Fragment, ReactNode, useImperativeHandle, useRef } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 
 interface IModalSimplesProps {
@@ -62,27 +62,35 @@ export const ModalSimples = React.forwardRef<IModalSimplesRef, IModalSimplesProp
             setStateOpen ? setStateOpen(true) : setIsOpen(true);
         }
 
+        const ButtonModal = () => {
+            return buttonCustom ? (
+                buttonCustom
+            ) : button === null ? null : (
+                <button
+                    className={button?.className}
+                    onClick={() => {
+                        button?.onClick && button?.onClick();
+                        openModal();
+                    }}
+                >
+                    {button?.children}
+                </button>
+            );
+        };
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const cancelButtonRef = useRef<any>(); // verificar uma forma de não aparecer o erro <FocusTrap />
+
         return (
             <>
-                {buttonCustom ? (
-                    { buttonCustom }
-                ) : button === null ? null : (
-                    <button
-                        className={button?.className}
-                        onClick={() => {
-                            button?.onClick && button?.onClick();
-                            openModal();
-                        }}
-                    >
-                        {button?.children}
-                    </button>
-                )}
+                <ButtonModal />
 
                 {isOpen || stateOpen ? (
                     <Transition appear show={stateOpen && setStateOpen ? stateOpen : isOpen} as={Fragment}>
                         <Dialog
                             as="div"
                             className="relative z-10"
+                            initialFocus={cancelButtonRef}
                             onClose={() => {
                                 if (event instanceof PointerEvent === false) {
                                     closeModal();
@@ -112,6 +120,7 @@ export const ModalSimples = React.forwardRef<IModalSimplesRef, IModalSimplesProp
                                             <button
                                                 className="float-right text-gray-300 hover:text-gray-100"
                                                 onClick={closeModal}
+                                                ref={cancelButtonRef}
                                             >
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
